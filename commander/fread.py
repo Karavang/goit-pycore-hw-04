@@ -2,27 +2,18 @@ from pathlib import Path
 from colorama import Fore
 from sys import argv
 
-startRoute = Path(argv[1])
 
-
-def fread(route):
-    global startRoute
-    # try:
-    Path(route)
-    contain = []
-    for path in Path(route).iterdir():
-
-        if path.suffix:
-            print(Fore.BLUE, path)
-            contain.append(str(path))
-
+def main():
+    res = []
+    startRoute = Path(argv[1])
+    for e in startRoute.iterdir():
+        print(e)
+        print(e.is_dir())
+        
+        if(e.is_dir()):
+            
         else:
-            print(Fore.YELLOW, path)
-            startRoute = str(startRoute) + "/" + str(path)
-            contain.append(fread(startRoute))
-        print(contain)
-    # except:
-    #     print("Не корректно вказаний роут")
+            res.append(e)
 
 
-fread(startRoute)
+main()
