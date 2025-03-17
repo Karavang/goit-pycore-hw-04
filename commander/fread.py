@@ -1,19 +1,23 @@
 from pathlib import Path
-from colorama import Fore
-from sys import argv
+from colorama import Fore, Style
+import sys
+
+startRoute = Path(sys.argv[1])
 
 
-def main():
-    res = []
-    startRoute = Path(argv[1])
-    for e in startRoute.iterdir():
-        print(e)
-        print(e.is_dir())
-        
-        if(e.is_dir()):
-            
+def sort_key(path: Path) -> str:
+    return path.name.lower()
+
+
+def commander(directory: Path, lvl: int = 0) -> None:
+    items = sorted(directory.iterdir(), key=sort_key)
+    for item in items:
+        indent = "    " * lvl
+        if item.is_dir():
+            print(f"{indent}{Fore.YELLOW}{item.name}/{Style.RESET_ALL}")
+            commander(item, lvl + 1)
         else:
-            res.append(e)
+            print(f"{indent}{Fore.BLUE}{item.name}{Style.RESET_ALL}")
 
 
-main()
+commander(startRoute)
